@@ -1,0 +1,47 @@
+import React from "react";
+import TodoForm from "./TodoForm";
+import {
+  RiCheckboxCircleFill,
+  RiCheckboxBlankCircleLine,
+} from "react-icons/ri";
+import { MdModeEditOutline, MdDeleteOutline } from "react-icons/md";
+
+function TodoListItem({
+  todo,
+  removeTodo,
+  submitUpdate,
+  edit,
+  setEdit,
+}) {
+  return (
+    <><>
+
+      <div className="todo-item">
+        {todo.isComplete ? (
+          <p>
+            <del>{todo.text}</del>
+          </p>
+        ) : edit.id === todo.id ? (
+          <TodoForm edit={edit} onSubmit={submitUpdate} />
+        ) : (
+          <p> {todo.text} </p>
+        )}
+      </div>
+    </><div className="todo-icons">
+        {!todo.isComplete && (
+          <MdModeEditOutline
+            onClick={() => setEdit({ id: todo.id, value: todo.text })}
+            className="edit-icon" />
+        )}
+        <MdDeleteOutline
+          onClick={() => removeTodo(todo.id)}
+          className="delete-icon" />
+      </div></>
+  );
+}
+
+TodoListItem.defaultProps = {
+  edit: { id: null, value: "" },
+};
+
+export default TodoListItem;
